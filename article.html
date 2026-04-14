@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DTD News - Bài tổng hợp</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar topbar-detail">
+      <div>
+        <p class="eyebrow">Bài báo tổng hợp</p>
+        <h1 id="articleTitle">Đang tải...</h1>
+        <p class="lead" id="articleSummary"></p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="index.html">Về trang chủ</a>
+        <button id="refreshBtn" class="btn">Tải lại</button>
+      </div>
+    </header>
+
+    <main class="detail-layout">
+      <section class="detail-main panel">
+        <div class="detail-meta">
+          <span id="articleCategory" class="tag"></span>
+          <span id="articleTime" class="time"></span>
+          <span id="articleSourceCount" class="source-pill"></span>
+        </div>
+
+        <article class="detail-article">
+          <h2>Nội dung tổng hợp</h2>
+          <div id="articleBody" class="detail-body"></div>
+        </article>
+
+        <article class="detail-article">
+          <h2>Các nguồn liên quan</h2>
+          <div id="sourceList" class="source-list"></div>
+        </article>
+      </section>
+
+      <aside class="panel sidebar">
+        <h2>Bài liên quan</h2>
+        <label class="field sidebar-search">
+          <span>Tìm trong bài liên quan</span>
+          <input id="relatedSearch" type="search" placeholder="Lọc theo từ khóa" />
+        </label>
+        <div id="relatedList" class="related-list"></div>
+      </aside>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script type="module" src="article.js"></script>
+  </body>
+</html>

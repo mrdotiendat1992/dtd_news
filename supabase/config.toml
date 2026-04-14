@@ -1,0 +1,24 @@
+project_id = "dtd-news"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+
+[edge_runtime]
+enabled = true
+
+[functions.ingest-news]
+verify_jwt = false

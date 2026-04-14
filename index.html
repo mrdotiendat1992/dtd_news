@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DTD News</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Supabase News Aggregator</p>
+        <h1>DTD News</h1>
+        <p class="lead">Tin tổng hợp từ các nguồn chính thống, cập nhật theo chủ đề.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="admin.html">Admin</a>
+        <button id="refreshBtn" class="btn">Tải lại</button>
+        <button id="ingestBtn" class="btn btn-secondary">Chạy cào tin</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel">
+        <h2>Bộ lọc</h2>
+        <label class="field">
+          <span>Tìm kiếm</span>
+          <input id="searchInput" type="search" placeholder="Nhập từ khóa" />
+        </label>
+        <label class="field">
+          <span>Danh mục</span>
+          <select id="categorySelect">
+            <option value="all">Tất cả</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Secret ingest</span>
+          <input id="secretInput" type="password" placeholder="x-ingest-secret" />
+        </label>
+        <p class="hint">Dùng secret để gọi edge function cào tin thủ công.</p>
+      </aside>
+
+      <section class="content">
+        <div class="section-head">
+          <h2>Bài báo tổng hợp</h2>
+          <p id="metaText">Đang tải dữ liệu...</p>
+        </div>
+        <div id="articleGrid" class="grid"></div>
+      </section>
+    </main>
+
+    <template id="articleTemplate">
+      <article class="card">
+        <div class="card-top">
+          <span class="tag"></span>
+          <span class="time"></span>
+        </div>
+        <h3 class="title"></h3>
+        <p class="summary"></p>
+        <div class="sources"></div>
+        <div class="card-actions">
+          <a class="link" target="_blank" rel="noreferrer">Xem bài tổng hợp</a>
+        </div>
+      </article>
+    </template>
+
+    <script src="config.dev.js"></script>
+    <script src="config.prod.js"></script>
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+  </html>

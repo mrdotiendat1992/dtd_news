@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DTD News - Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar topbar-detail">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Điều khiển ingest</h1>
+        <p class="lead">Chạy ingest thủ công, xem log và kiểm tra pipeline.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="index.html">Trang chủ</a>
+        <button id="refreshBtn" class="btn">Tải log</button>
+      </div>
+    </header>
+
+    <main class="admin-layout">
+      <section class="panel admin-panel">
+        <h2>Chạy ingest</h2>
+        <label class="field">
+          <span>Secret</span>
+          <input id="secretInput" type="password" placeholder="INGEST_SECRET" />
+        </label>
+        <div class="actions-inline">
+          <button id="runBtn" class="btn">Chạy ingest</button>
+          <span id="runStatus" class="hint"></span>
+        </div>
+        <div class="admin-stats">
+          <div class="stat-card"><strong id="statSources">0</strong><span>Nguồn</span></div>
+          <div class="stat-card"><strong id="statItems">0</strong><span>Tin thô</span></div>
+          <div class="stat-card"><strong id="statArticles">0</strong><span>Bài tổng hợp</span></div>
+        </div>
+      </section>
+
+      <section class="panel admin-panel">
+        <h2>Log chạy gần đây</h2>
+        <div id="logList" class="log-list"></div>
+      </section>
+    </main>
+
+    <script src="config.dev.js"></script>
+    <script src="config.prod.js"></script>
+    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>
