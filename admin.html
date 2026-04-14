@@ -15,20 +15,41 @@
       </div>
       <div class="actions">
         <a class="btn btn-secondary" href="index.html">Trang chủ</a>
-        <button id="refreshBtn" class="btn">Tải log</button>
+        <button id="signOutBtn" class="btn btn-secondary hidden">Đăng xuất</button>
+        <button id="refreshBtn" class="btn hidden">Tải log</button>
       </div>
     </header>
 
     <main class="admin-layout">
-      <section class="panel admin-panel">
-        <h2>Chạy ingest</h2>
+      <section id="loginPanel" class="panel admin-panel">
+        <h2>Đăng nhập admin</h2>
         <label class="field">
-          <span>Secret</span>
-          <input id="secretInput" type="password" placeholder="INGEST_SECRET" />
+          <span>Email</span>
+          <input id="emailInput" type="email" placeholder="admin@domain.com" />
         </label>
+        <label class="field">
+          <span>Password</span>
+          <input id="passwordInput" type="password" placeholder="••••••••" />
+        </label>
+        <button id="signInBtn" class="btn">Đăng nhập</button>
+        <p id="authStatus" class="hint"></p>
+      </section>
+
+      <section id="dashboardPanel" class="panel admin-panel hidden">
+        <h2>Chạy ingest</h2>
         <div class="actions-inline">
           <button id="runBtn" class="btn">Chạy ingest</button>
           <span id="runStatus" class="hint"></span>
+        </div>
+        <div class="dashboard-grid">
+          <div class="chart-card">
+            <h3>Theo ngày</h3>
+            <div id="dailyChart" class="bar-chart"></div>
+          </div>
+          <div class="chart-card">
+            <h3>Theo chủ đề</h3>
+            <div id="topicChart" class="bar-chart"></div>
+          </div>
         </div>
         <div class="admin-stats">
           <div class="stat-card"><strong id="statSources">0</strong><span>Nguồn</span></div>
@@ -37,7 +58,7 @@
         </div>
       </section>
 
-      <section class="panel admin-panel">
+      <section id="logPanel" class="panel admin-panel hidden">
         <h2>Log chạy gần đây</h2>
         <div id="logList" class="log-list"></div>
       </section>

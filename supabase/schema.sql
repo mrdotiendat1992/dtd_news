@@ -1,4 +1,5 @@
 create extension if not exists pgcrypto;
+create extension if not exists vector;
 
 create table if not exists public.news_sources (
   id uuid primary key default gen_random_uuid(),
@@ -19,6 +20,7 @@ create table if not exists public.raw_news_items (
   image_url text,
   published_at timestamptz,
   fingerprint text not null,
+  embedding vector(1536),
   created_at timestamptz not null default now()
 );
 
@@ -31,6 +33,7 @@ create table if not exists public.aggregated_articles (
   category text not null default 'general',
   source_count int not null default 0,
   source_links jsonb not null default '[]'::jsonb,
+  embedding vector(1536),
   published_at timestamptz not null default now(),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -52,6 +55,9 @@ create index if not exists raw_news_items_source_id_idx on public.raw_news_items
 create index if not exists raw_news_items_published_at_idx on public.raw_news_items(published_at desc);
 create index if not exists aggregated_articles_published_at_idx on public.aggregated_articles(published_at desc);
 create index if not exists ingest_runs_started_at_idx on public.ingest_runs(started_at desc);
+
+create index if not exists raw_news_items_embedding_idx on public.raw_news_items using ivfflat (embedding vector_cosine_ops) with (lists = 100);
+create index if not exists aggregated_articles_embedding_idx on public.aggregated_articles using ivfflat (embedding vector_cosine_ops) with (lists = 100);
 
 alter table public.news_sources enable row level security;
 alter table public.raw_news_items enable row level security;
@@ -95,6 +101,7 @@ begin
     for select
     using (true);
   end if;
+
 end $$;
 
 insert into public.news_sources (name, feed_url, category)

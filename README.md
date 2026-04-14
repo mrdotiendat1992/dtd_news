@@ -27,7 +27,11 @@ Web app tin tức tổng hợp dùng Supabase làm backend và HTML/CSS/JS làm 
    - `SUPABASE_URL`
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `INGEST_SECRET`
+   - `ADMIN_EMAILS` (tuỳ chọn, phân tách bằng dấu phẩy)
+   - `OPENAI_API_KEY` (tuỳ chọn, để bật embedding mạnh)
 5. Mở `config.dev.js` và `config.prod.js` để điền `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `INGEST_SECRET`.
+
+Admin login dùng Supabase Auth email/password. Chỉ email trong `ADMIN_EMAILS` mới được chạy ingest.
 
 Frontend sẽ tự chọn config theo `?env=dev|prod` hoặc hostname.
 
@@ -48,6 +52,12 @@ Hoặc dùng một lệnh PowerShell:
 
 ```powershell
 .\scripts\deploy.ps1 -ProjectRef <project-ref> -SupabaseUrl https://<project-ref>.supabase.co -ServiceRoleKey <service-role-key> -IngestSecret <secret>
+```
+
+Nếu muốn giới hạn email admin và bật embedding:
+
+```powershell
+.\scripts\deploy.ps1 -ProjectRef <project-ref> -SupabaseUrl https://<project-ref>.supabase.co -ServiceRoleKey <service-role-key> -IngestSecret <secret> -AdminEmails admin@domain.com -OpenAIApiKey <openai-key>
 ```
 
 Nếu muốn seed lại nguồn RSS:
