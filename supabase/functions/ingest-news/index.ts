@@ -182,7 +182,7 @@ async function buildAggregates(items: NewsItem[], sources: FeedSource[]) {
   const sourceMap = new Map(sources.map((source) => [source.id, source]));
   const clusters = clusterItems(items, sourceMap);
 
-  const { error: clearError } = await client.from("aggregated_articles").delete();
+  const { error: clearError } = await client.from("aggregated_articles").delete().neq("id", "00000000-0000-0000-0000-000000000000");
   if (clearError) throw clearError;
 
   const articles = [];
