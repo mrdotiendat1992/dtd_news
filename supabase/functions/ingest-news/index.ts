@@ -1,4 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import * as cheerio from "npm:cheerio";
 
 type FeedSource = {
   id: string;
@@ -131,17 +132,18 @@ async function loadItems(sources: FeedSource[]): Promise<NewsItem[]> {
     if (!response.ok) continue;
 
     const xml = await response.text();
-    const doc = new DOMParser().parseFromString(xml, "application/xml");
-    if (!doc) continue;
+    const $ = cheerio.load(xml, { xmlMode: true });
 
-    for (const node of [...doc.querySelectorAll("item")].slice(0, 20)) {
-      const title = tagText(node, "title");
-      const url = tagText(node, "link");
+    for (const node of $("item").slice(0, 20).toArray()) {
+      const el = $(node);
+      const title = el.find("title").first().text().trim();
+      const url = el.find("link").first().text().trim();
       if (!title || !url) continue;
 
-      const description = tagText(node, "description");
+      const description = el.find("description").text();
       const summary = stripHtml(description);
-      const content = stripHtml(tagText(node, "content:encoded"));
+      const contentText = el.find("content\\:encoded").text() || el.find("content").text();
+      const content = stripHtml(contentText);
       const text = `${title} ${summary} ${content}`;
 
       raw.push({
@@ -151,7 +153,7 @@ async function loadItems(sources: FeedSource[]): Promise<NewsItem[]> {
         summary: summary || title,
         content: content || summary || title,
         image_url: extractImageUrl(description),
-        published_at: parseDate(tagText(node, "pubDate")),
+        published_at: parseDate(el.find("pubDate").first().text().trim()),
         fingerprint: fingerprint(text),
         tokens: tokenSet(text),
       });
